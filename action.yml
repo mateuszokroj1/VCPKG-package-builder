@@ -1,0 +1,31 @@
+name: 'vcpkg-builder'
+description: 'VCPKG packages builder with output in artifact.'
+inputs:
+  packages:  # id of input
+    description: 'IDs of packages to download'
+    required: true
+outputs:
+  out-package-id:
+    description: "ID of generated package in artifact"
+    value: ${{ steps.random-number-generator.outputs.random-number }}
+runs:
+  using: "composite"
+  steps:
+  
+    - name: vcpkg Git clone
+      shell: sh
+      run: git clone "https://github.com/microsoft/vcpkg"
+
+    - name: Install vcpkg (Win)
+      if: ${{ runner.os == 'Windows' }}
+      shell: powershell
+      working-directory: vcpkg
+      run: ./bootstrap-vcpkg.bat
+
+    - name: Install vcpkg
+      if: ${{ runner.os != 'Windows' }}
+      shell: sh
+      working-directory: vcpkg
+      run: ./bootstrap-vcpkg.sh
+
+    #- name: Install packages
