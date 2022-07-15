@@ -1,5 +1,6 @@
 name: 'vcpkg-builder'
 description: 'VCPKG packages builder with output in artifact.'
+icon: box
 
 inputs:
   packages:  # id of input
