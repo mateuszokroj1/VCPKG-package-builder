@@ -1,11 +1,11 @@
 function(Build_VCPKG_Package vcpkg_libraries)
-	list(vcpkg_libraries LENGTH list_length)
+	list(LENGTH vcpkg_libraries list_length)
 
 	if(list_length EQUAL 0)
 		message(FATAL_ERROR "Variable must be a non-empty list.")
 	endif()
 
-	find_program(Git)
+	find_program(Git NAMES git)
 
 	set(vcpkg_dir ${CMAKE_CURRENT_BINARY_DIR}/vcpkg)
 
@@ -36,7 +36,7 @@ function(Build_VCPKG_Package vcpkg_libraries)
 
 	find_program(vcpkg_app NAMES vcpkg HINTS ${vcpkg_dir})
 
-	foreach(package_name IN vcpkg_libraries)
+	foreach(package_name ${vcpkg_libraries})
 		message(STATUS "vcpkg: Installing ${package_name}...")
 		execute_process(
 			COMMAND ${vcpkg_app} install ${package_name}
