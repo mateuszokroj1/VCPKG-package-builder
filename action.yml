@@ -16,9 +16,9 @@ runs:
   
     - name: Install
       shell: sh
-      run: "cmake -Dlibraries='${{ inputs.packages }}' -DCMAKE_BUILD_DIR=. ."
+      run: "cmake -Dlibraries='${{ inputs.packages }}' ."
 
     - uses: actions/upload-artifact@v3
       with:
         name: ${{ inputs.artifact-id }}-${{ runner.os }}
-        path: /vcpkg/
+        path: vcpkg
