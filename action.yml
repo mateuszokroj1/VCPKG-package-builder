@@ -1,10 +1,9 @@
 name: 'vcpkg-builder'
 description: 'VCPKG packages builder with output in artifact.'
-icon: box
 
 inputs:
-  packages:  # id of input
-    description: 'IDs of packages to download'
+  packages:
+    description: 'IDs of packages to download (strings separated by semicolon)'
     required: true
 
   artifact-id:
@@ -15,10 +14,9 @@ runs:
   using: composite
   steps:
   
-    - name: main-action
-      uses: index.js
-      with:
-        out-package-id: ${{ inputs.packages }}
+    - name: Install
+      shell: sh
+      run: cmake -Dvcpkg_libraries=${{ inputs.packages }} .
 
     - uses: actions/upload-artifact@v3
       with:
