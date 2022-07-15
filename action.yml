@@ -6,32 +6,20 @@ inputs:
     description: 'IDs of packages to download'
     required: true
 
-outputs:
-  out-package-id:
-    description: "ID of generated package in artifact"
+  artifact-id:
+    description: 'ID for artifact to be published (name of runner is added automatically)'
+    required: true
 
 runs:
-  using: "node16"
-  main: index.js
+  using: composite
+  steps:
   
-#  steps:
-  
+    - name: main-action
+      uses: index.js
+      with:
+        out-package-id: ${{ inputs.packages }}
 
-
-#    - name: vcpkg Git clone
-#      shell: sh
-#      run: git clone "https://github.com/microsoft/vcpkg"
-
-#    - name: Install vcpkg (Win)
-#      if: ${{ runner.os == 'Windows' }}
-#      shell: powershell
-#      working-directory: vcpkg
-#      run: ./bootstrap-vcpkg.bat
-
-#    - name: Install vcpkg
-#      if: ${{ runner.os != 'Windows' }}
-#      shell: sh
-#      working-directory: vcpkg
-#      run: ./bootstrap-vcpkg.sh
-
-    #- name: Install packages
+    - uses: actions/upload-artifact@v3
+      with:
+        name: ${{ inputs.artifact-id }}-${{ runner.os }}
+        path: /vcpkg/

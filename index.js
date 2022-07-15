@@ -1,11 +1,9 @@
 const core = require('@actions/core');
-const github = require('@actions/github');
 const exec = require('child_process');
 const os = require('os');
 
 try {
     console.log("VCPKG automated configurator\n");
-    const token = core.getInput("GITHUB_TOKEN");
 
     core.setCommandEcho(true);
 
@@ -21,7 +19,6 @@ try {
         core.setFailed("Error while downloading VCPKG.");
     }
 
-    const api = github.getOctokit(token);
     const platform = os.platform();
 
     console.log("Installing VCPKG...");
