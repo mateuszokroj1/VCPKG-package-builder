@@ -25,7 +25,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3  
       
-      - uses: mateuszokroj1/VCPKG-package-builder@v1.0.6
+      - uses: mateuszokroj1/VCPKG-package-builder@v1.0.7
         with:
           packages: gtest;rtmidi
           artifact-id: abcd
