@@ -15,7 +15,7 @@ jobs:
     
     strategy:
       matrix:
-        runsOn: ['ubuntu-latest', 'windows-latest', 'macOs-latest']
+        runsOn: ['ubuntu-latest']
    
     # The type of runner that the job will run on
     runs-on: ${{ matrix.runsOn }}
@@ -25,7 +25,8 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3  
       
-      - uses: mateuszokroj1/VCPKG-package-builder@v1.0.4
+      - uses: mateuszokroj1/VCPKG-package-builder@v1.0.5
         with:
-          packages: gtest;opengl
+          packages: gtest
           artifact-id: abcd
+
