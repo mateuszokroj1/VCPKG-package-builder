@@ -17,6 +17,15 @@ runs:
     - name: Install
       shell: sh
       run: "cmake -Dlibraries='${{ inputs.packages }}' ."
+      
+    - name: Main dir
+      shell: sh
+      run: dir
+      
+    - name: vcpkg dir
+      shell: sh
+      continue-on-error: true
+      run: cd vcpkg && dir
 
     - uses: actions/upload-artifact@v3
       with:
