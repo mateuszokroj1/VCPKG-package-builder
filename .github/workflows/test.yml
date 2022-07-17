@@ -15,7 +15,7 @@ jobs:
     
     strategy:
       matrix:
-        runsOn: ['ubuntu-latest']
+        runsOn: ['ubuntu-latest', 'windows-latest', 'macOs-latest']
    
     # The type of runner that the job will run on
     runs-on: ${{ matrix.runsOn }}
@@ -25,8 +25,8 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3  
       
-      - uses: mateuszokroj1/VCPKG-package-builder@v1.0.5
+      - uses: mateuszokroj1/VCPKG-package-builder@v1.0.6
         with:
-          packages: gtest
+          packages: gtest;rtmidi
           artifact-id: abcd
 
