@@ -19,8 +19,21 @@ function(Download_VCPKG_Package owner repo_name version_id)
 
 	message(STATUS "Connecting to GitHub API...")
 
-	file(DOWNLOAD "https://api.github.com/repos/${owner}/${repo_name}/actions/artifacts" ${CMAKE_CURRENT_LIST_DIR}/index_json)
+	if(CMAKE_SYSTEM_NAME equal "Windows")
+		set(target_platform "Windows")
+	elseif(CMAKE_SYSTEM_NAME equal "Darwin")
+		set(target_platform "MacOS")
+	else()
+		set(target_platform "Linux")
+	endif()
+
+	file(DOWNLOAD "https://api.github.com/repos/${owner}/${repo_name}/actions/artifacts/${version-id}-${target_platform}" ${CMAKE_CURRENT_LIST_DIR}/index_json)
 	file(STRINGS ${CMAKE_CURRENT_LIST_DIR}/index_json json_content)
-	message("${json_content}")
+	
+	string(LENGTH json_content json_length)
+
+	if(json_length LESS 1)
+		message(FATAL_ERROR "GitHub API returned empty response. Maybe artifact not exist.")
+	endif()
 
 endfunction()
